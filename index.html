@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+    <title>Currency Converter</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+ </head>
+ <body>
+    <h1 id="mainTitle">Currency Converter</h1>
+    <div class="toFlex">
+        <h2>Display Currency Symbols</h2>
+        <button id="display" class="forBtn" type="submit">CLICK </button>
+    </div>
+    <p id="symbols"></p>
+    <p id="dataResult"></p>
+    <form id="form">
+        <input 
+          id="from" 
+          type="text" 
+          placeholder="From"
+          title="Please Enter a valid Country Name"
+        >
+        <input
+        id="to" 
+        type="text" 
+        placeholder="To"
+        title="Please Enter a valid Country Name"
+        >
+        <input 
+        id="amount" 
+        type="text" 
+        placeholder="Amount"
+        title="Please Enter a valid Amount"
+        >
+        <button class="forBtn" type="submit">CONFIRM</button>
+    </form>
+
+    <script type="module">
+        const form1 = document.getElementById('form')
+        const fromInput = document.getElementById('from')
+        const toInput = document.getElementById('to')
+        const amountInput = document.getElementById('amount')
+        const displaySymbol = document.getElementById('display')
+        const symbolsEl = document.getElementById('symbols')
+        const resultEl = document.getElementById('dataResult')
+
+
+        form1.addEventListener('submit', (e) => {
+            e.preventDefault()
+
+            const fromCountry = fromInput.value
+            const toCountry = toInput.value
+            const amount = amountInput.value
+            console.log(fromCountry, toCountry, amount)
+
+            currencyConverter(toCountry, fromCountry, amount, (data)=>{
+                console.log(data)
+                const {date, info, result, query} = data
+                const {rate} = info
+                const {amount} = query
+                resultEl.innerHTML =
+                    `<div class ='titles'>
+                        <p class='forTitle'> Date: ${date}</p>
+                        <p class='forTitle'> Rate: ${rate}</p>
+                        <p class='forTitle'> Result: ${result}</p>
+                        <p class='forTitle'> Amount: ${amount} ${toCountry}</p>
+                    <div>`
+            })
+        })
+
+        displaySymbol.addEventListener('click', (e) => {
+            e.preventDefault()
+            currencySymbol((symbols) => {
+                const currencySym = Object.keys(symbols)
+                console.log(currencySym)
+                symbolsEl.innerHTML = '' //clear the html
+                currencySym.forEach((symbol) => {
+                    symbolsEl.innerHTML += `<div class='designSym'>${symbol} : ${symbols[symbol]}</div>`
+                })
+            })
+        })
+
+        function currencyConverter(to, from, amount, success) {
+            var myHeaders = new Headers();
+            myHeaders.append("apikey", "GZ8nFslhkv4pJGyKJR4ih72DCA1nBiHX");
+
+            var requestOptions = {
+                method: 'GET',
+                redirect: 'follow',
+                headers: myHeaders
+                };
+            
+            const path = `https://api.apilayer.com/fixer/convert?to=${to}&from=${from}&amount=${amount}`
+            fetch(path, requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    success(result)
+                })
+                .catch(error => console.log('error', error));
+        }
+
+        function currencySymbol(success) {
+            var myHeaders = new Headers();
+            
+            myHeaders.append("apikey", "GZ8nFslhkv4pJGyKJR4ih72DCA1nBiHX");
+
+            var requestOptions = {
+            method: 'GET',
+            redirect: 'follow',
+            headers: myHeaders
+            };
+
+            fetch("https://api.apilayer.com/fixer/symbols", requestOptions) // call the server
+            .then(response => response.json()) //respond to the server in json
+            .then(result => {
+                success(result.symbols)
+            }) 
+            .catch(error => console.log('error', error));
+        }
+    </script>    
+ </body>
+</html>

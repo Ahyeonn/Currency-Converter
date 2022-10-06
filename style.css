@@ -1,0 +1,67 @@
+body {
+    padding-left: 20px;
+}
+
+.forTitle {
+    font-weight: lighter;
+    margin-right: 30px;
+    font-style: oblique;
+}
+
+.titles {
+    font-size: 20px;
+    display: flex;
+    padding-left: 10px;
+    height: 40px;
+}
+
+#mainTitle {
+    color: rgb(131, 151, 129);
+    border-bottom: 10px solid rgb(180, 179, 179);
+    border-bottom-width: 2px;
+    padding: 20px 0px 30px 10px;
+}
+
+h2 {
+    padding-left: 10px;
+    font-weight: lighter;
+}
+
+.toFlex {
+    display: flex;
+    align-items: center;
+}
+
+.forBtn {
+    height: 27px;
+    background-color: white;
+    border-width: 1px;
+    margin-left: 30px;
+}
+
+#form input {
+    height: 22px;
+    border-radius: 4%;
+    padding-left: 10px;
+    border-width: 1px;
+    width: 100px;
+}
+
+#form {
+    padding: 20px 10px 20px;
+}
+
+#from {
+    margin-right: 10px;
+}
+
+#to {
+    margin-right: 10px;
+}
+
+#symbols {
+    padding-left: 17px;
+    border-left: solid;
+    border-width: 1px;
+    border-color: rgb(180, 179, 179);
+}
